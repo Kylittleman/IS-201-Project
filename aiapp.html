@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compliment Generator</title>
+
+  <!-- Google Fonts & Bootstrap -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="scratch.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+
+  <!-- Navbar (Copied from index.html) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary py-3 shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Kyler Hite</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="scratch.html">Scratch</a></li>
+          <li class="nav-item"><a class="nav-link" href="aiapp.html">AI App</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Compliment Generator Card -->
+  <main class="card riddle-card shadow p-4 mx-auto my-5" style="max-width: 500px; width: 100%;">
+    <div class="card-header text-center bg-primary text-white">
+      <h2 class="mb-0 fw-bold">Compliment Generator</h2>
+    </div>
+    <div class="card-body text-center">
+      <p class="lead">Click the button to get a compliment!</p>
+      <button class="btn btn-accent mb-3" id="generateCompliment">Give me a compliment</button>
+      <p id="compliment" class="mt-3 fw-semibold"></p>
+    </div>
+  </main>
+
+  <!-- Optional Footer or Home Button (Now covered by navbar) -->
+  <!-- <div class="text-center mb-5">
+    <a href="index.html" class="btn btn-outline-primary">&larr; Back to Home Page</a>
+  </div> -->
+
+  <script>
+    const compliments = [
+  "You're doing amazing!",
+  "You have a great sense of humor!",
+  "You're a fast learner!",
+  "You're incredibly thoughtful.",
+  "You light up the room!",
+  "You have a brilliant mind.",
+  "You're unstoppable!",
+  "Your positivity is infectious!",
+  "You're stronger than you think.",
+  "You make the world a better place.",
+  "You’re a great listener.",
+  "You inspire people around you.",
+  "You're so creative!",
+  "You have a heart of gold.",
+  "You radiate confidence.",
+  "You're a natural leader.",
+  "You always know what to say.",
+  "You're a great friend.",
+  "Your smile is contagious.",
+  "You bring out the best in others.",
+  "You’re wise beyond your years.",
+  "You’re brave for being yourself.",
+  "Your laugh is the best thing ever.",
+  "You’re the definition of resilience.",
+  "You spread joy everywhere you go.",
+  "You’re one of a kind.",
+  "You always see the good in people.",
+  "You're a calming presence.",
+  "You're so dependable.",
+  "Your ideas are refreshing.",
+  "You’re full of great energy.",
+  "You’re genuinely kind.",
+  "You’re easy to talk to.",
+  "You’ve got style!",
+  "You're glowing today.",
+  "You’re full of potential.",
+  "You make challenges look easy.",
+  "You're really intuitive.",
+  "You notice the little things that matter.",
+  "You turn dreams into reality.",
+  "You bring light into dark moments.",
+  "You handle stress like a champ.",
+  "You're an excellent problem solver.",
+  "You're surprisingly witty!",
+  "You're deeply compassionate.",
+  "You care deeply and it shows.",
+  "You're always growing.",
+  "You're good at making others feel seen.",
+  "You make hard work look effortless.",
+  "You're always improving.",
+  "You're an awesome communicator.",
+  "You’re emotionally intelligent.",
+  "You’ve got great instincts.",
+  "You're an original thinker.",
+  "You're a vibe!",
+  "You’re such a positive influence.",
+  "You're a great teammate.",
+  "You always show up when it counts.",
+  "You're a breath of fresh air.",
+  "You're incredibly thoughtful.",
+  "You’ve got a strong moral compass.",
+  "You’re full of surprises (the good kind!).",
+  "You’re quick on your feet.",
+  "You're a solution-finder.",
+  "You're humble and awesome.",
+  "You're motivating just by being you.",
+  "You're refreshingly honest.",
+  "You're real in the best way.",
+  "You're a creative powerhouse.",
+  "You radiate self-respect.",
+  "You're unapologetically you.",
+  "You’ve got a great presence.",
+  "You're smooth under pressure.",
+  "You’ve got great taste in music.",
+  "You're uplifting.",
+  "You’re a joy to be around.",
+  "You make people feel safe.",
+  "You're the kind of person others look up to.",
+  "You're grounded and inspiring.",
+  "You're seriously impressive.",
+  "You're great at setting boundaries.",
+  "You’re a trailblazer.",
+  "You always bring good vibes.",
+  "You light up every room you enter.",
+  "You're a hidden gem.",
+  "You're sharper than you realize.",
+  "You're a great storyteller.",
+  "You're full of charisma.",
+  "You're reliable and respected.",
+  "You’re thoughtful in all the right ways.",
+  "You're full of wisdom.",
+  "You're hilarious!",
+  "You're refreshingly authentic.",
+  "You're a great role model.",
+  "You're such a hard worker.",
+  "You're perfectly imperfect (and awesome).",
+  "You keep things real.",
+  "You're great at encouraging others.",
+  "You're fun to be around.",
+  "You're a great example of kindness.",
+  "You're emotionally strong.",
+  "You're a positive force.",
+  "You’re incredibly insightful.",
+  "You always give great advice.",
+  "You make people feel appreciated.",
+  "You handle feedback like a pro.",
+  "You're such a thoughtful gift-giver.",
+  "You're a memory-maker.",
+  "You're just... legendary."
+];
+
+
+    document.getElementById("generateCompliment").addEventListener("click", () => {
+      const randomIndex = Math.floor(Math.random() * compliments.length);
+      document.getElementById("compliment").textContent = compliments[randomIndex];
+    });
+  </script>
+</body>
+</html>
